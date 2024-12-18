@@ -14,14 +14,14 @@ export GOFLAGS="-buildvcs=false"
 OS := $(shell uname)
 
 ifeq ($(OS),Linux)
-    BINARY := bin/calc
+    BINARY := bin/CalcService
 else ifeq ($(OS),Darwin)
-    BINARY := bin/calc
+    BINARY := bin/CalcService
 else
-    BINARY := bin/calc.exe
+    BINARY := bin/CalcService.exe
 endif
 
-ENTRY_POINT=./cmd/main.go
+ENTRY_POINT=./cmd/calc_service/main.go
 
 # Main
 ##############################################################################
@@ -29,7 +29,7 @@ ENTRY_POINT=./cmd/main.go
 
 .PHONY: run
 run: install-dep  ## Launch app (main.go)
-	go run ./cmd/main.go
+	go run $(ENTRY_POINT)
 
 .PHONY: build-run
 build-run:  ## Launch build app (int ./bin)
