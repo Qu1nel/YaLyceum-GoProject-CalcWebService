@@ -21,7 +21,7 @@ else
     BINARY := bin/CalcService.exe
 endif
 
-ENTRY_POINT=./cmd/calc_service/main.go
+ENTRY_POINT=./cmd/main.go
 
 # Main
 ##############################################################################
@@ -57,7 +57,7 @@ build:  ## Build the app
 
 
 .PHONY: lint-check lint lints check
-lint-check: gofmt goimports gocyclo golangci-lint gocritic go-mod-tidy  ## Complete code base check with linters and formatters
+lint-check: go-mod-tidy gofmt goimports gocyclo golangci-lint gocritic ## Complete code base check with linters and formatters
 
 
 # Alias
