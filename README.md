@@ -24,17 +24,11 @@
 </p>
 
 <p>
-  <a href="https://www.python.org/downloads/release/python-3110/" >
-    <img src="https://img.shields.io/badge/Python-3.11%2B-blueviolet" alt="python Version" />
-  <a>
-  <a href="https://github.com/Qu1nel/YaLyceum-GoProject-CalcWebService/releases/">
-    <img src="https://img.shields.io/github/v/release/Qu1nel/YaLyceum-GoProject-CalcWebService" alt="project version" />
+  <a href="https://go.dev/doc/install" >
+    <img src="https://img.shields.io/badge/Go-1.23.4%2B-blueviolet" alt="golang Version" />
   <a>
   <a href="https://github.com/Qu1nel/YaLyceum-GoProject-CalcWebService/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/Qu1nel/YaLyceum-GoProject-CalcWebService?color=g" alt="license" />
-  </a>
-  <a href="">
-    <img src="https://img.shields.io/github/actions/workflow/status/Qu1nel/YaLyceum-GoProject-CalcWebService/python_linting.yml" alt="linting" />
   </a>
 </p>
 
@@ -78,8 +72,15 @@
 <details>
   <summary><h3 id="screenshots">Скриншоты</h3></summary>
   <div align="center">
-    <img src=".github/assets/preview1.png" width=580px>
-    <img src=".github/assets/preview2.png" width=580px>
+    <div>
+      <img src=".github/assets/preview1.png" width=580px>
+    </div>
+    <div>
+      <img src=".github/assets/preview2.png" width=580px>
+    </div>
+    <div>
+      <img src=".github/assets/preview3.png" width=580px>
+    </div>
   </div>
 </details>
 
@@ -127,6 +128,8 @@ docker-compose up -d
 ```bash
 docker compose down
 ```
+
+После откройте браузер и напишите в адрессную строку `http://localhost:8085`, у вас откроется swagger-ui
 
 
 ### Самостоятельно
