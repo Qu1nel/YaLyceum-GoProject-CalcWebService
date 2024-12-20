@@ -88,14 +88,14 @@
 
 Для запуска сервиса нужен [docker](https://docs.docker.com/compose/install/), либо [make](https://stackoverflow.com/questions/32127524/how-to-install-and-use-make-in-windows) или просто запустить сервис самостоятельно
 
-## Запуск
-
 Склонируйте репозиторий или скачайте `.zip` архив и раскакуйте его
 
 ```bash
 git clone https://github.com/Qu1nel/YaLyceum-GoProject-CalcWebService.git
 cd YaLyceum-GoProject-CalcWebService/
 ```
+
+## Запуск
 
 ### Make
 
