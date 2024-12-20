@@ -1,0 +1,16 @@
+services:
+  calc_service:
+    container_name: calc_service
+    build: 
+      context: .
+    ports:
+      - "8989:8989"
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: swagger-ui
+    ports:
+      - "8085:8080"
+    volumes:
+      - ./calc.service.swagger.yaml:/usr/share/nginx/html/swagger/calc.swagger.yaml
+    environment:
+      API_URL: swagger/calc.swagger.yaml
