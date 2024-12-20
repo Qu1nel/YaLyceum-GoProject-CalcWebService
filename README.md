@@ -137,6 +137,7 @@ docker compose down
 Для самостоятельного запуска сервиса, запустите:
 
 ```bash
+go mod tidy
 go build -o main ./cmd/main.go
 ./main
 ```
@@ -144,6 +145,7 @@ go build -o main ./cmd/main.go
 Или без сборки:
 
 ```bash
+go mod tidy
 go run ./cmd/main.go
 ```
 
