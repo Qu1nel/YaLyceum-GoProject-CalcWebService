@@ -48,7 +48,7 @@ install-dep:  ## Install tools for dev
 
 
 .PHONY: build
-build:  ## Build the app
+build: go-mod-tidy ## Build the app
 	go build -o $(BINARY) $(ENTRY_POINT)
 
 

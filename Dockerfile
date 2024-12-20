@@ -1,6 +1,17 @@
-FROM golang:latest AS builder
-RUN apt-get update && apt-get install -y make
+FROM golang:1.23.4-alpine AS builder
+
 WORKDIR /app
+
+COPY go.mod go.sum ./
+RUN go mod download
+
 COPY . .
-RUN make build
-CMD ["make", "build-run"]
+RUN CGO_ENABLED=0 go build -o calc_service ./cmd/main.go
+
+FROM alpine:latest
+
+WORKDIR /app
+
+COPY --from=builder /app/calc_service /app/calc_service
+
+CMD /app/calc_service
