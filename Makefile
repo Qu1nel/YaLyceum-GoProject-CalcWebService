@@ -15,10 +15,13 @@ OS := $(shell uname)
 
 ifeq ($(OS),Linux)
     BINARY := bin/CalcService
+	TEST_PATH := ./...
 else ifeq ($(OS),Darwin)
     BINARY := bin/CalcService
+	TEST_PATH := ./...
 else
     BINARY := bin/CalcService.exe
+	TEST_PATH := .\...
 endif
 
 ENTRY_POINT=./cmd/main.go
@@ -134,7 +137,7 @@ tests:  ## Unit tests for Go
 	@echo -e "$(BLUE)Applying go test..."
 	@echo -e "$(GREEN)=================$(RESET)"
 	@echo -e
-	go test -tags=unit -timeout 30s -short -v .\...
+	go test -tags=unit -timeout 30s -short -v $(TEST_PATH)
 	@echo -e
 
 
