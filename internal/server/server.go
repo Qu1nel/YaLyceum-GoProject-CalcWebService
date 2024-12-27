@@ -3,11 +3,12 @@ package server
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
+	"strings"
 
-	httpErr "CalcService/internal/error"
-
+	"CalcService/internal/httpErr"
 	"CalcService/pkg/calculator"
 	"CalcService/pkg/logger"
 
@@ -27,8 +28,17 @@ type Server struct {
 	server *echo.Echo
 }
 
+func (s *Server) Stop(ctx context.Context) error {
+	return s.server.Shutdown(ctx)
+}
+
+func (s *Server) Start(port string) error {
+	return s.server.Start(port)
+}
+
 func New(ctx context.Context, port int, pattern_url string) (*Server, error) {
 	e := echo.New()
+
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{AllowMethods: []string{"POST", "OPTION"}}))
 	e.Use(middleware.LoggerWithConfig(
@@ -39,21 +49,13 @@ func New(ctx context.Context, port int, pattern_url string) (*Server, error) {
 	))
 
 	server := &Server{e}
-	server.server.POST(pattern_url, server.calculate)
+	server.server.POST(pattern_url, server.calculate)  // обработчик для метода POST
 
 	return server, nil
 }
 
-func (s *Server) Start(port string) error {
-	return s.server.Start(port)
-}
-
-func (s *Server) Stop(ctx context.Context) error {
-	return s.server.Shutdown(ctx)
-}
-
 func (s *Server) calculate(c echo.Context) error {
-	if c.Request().Header.Get("Content-Type") != "application/json" {
+	if c.Request().Header.Get("Content-Type") != echo.MIMEApplicationJSON {
 		logger.New().Info(context.Background(), "content type not allowed", zap.String("Content-Type", c.Request().Header.Get("Content-Type")), zap.String("required Content-Type", "application/json"))
 		return httpErr.NotValidExpression
 	}
@@ -71,13 +73,14 @@ func (s *Server) calculate(c echo.Context) error {
 		return httpErr.NotValidExpression
 	}
 
-	if req.Expression == "internal" {
+	if strings.TrimSpace(req.Expression) == "internal" {
 		return httpErr.InternalServer
 	}
 
 	res, err := calculator.Calc(req.Expression)
 	if err != nil {
-		return httpErr.NotValidExpression
+		msg := fmt.Sprintf("%s (%s)", httpErr.NotValidExpression.Message, err)
+		return echo.NewHTTPError(httpErr.NotValidExpression.Code, msg)
 	}
 
 	return c.JSON(http.StatusOK, Response{Result: res})

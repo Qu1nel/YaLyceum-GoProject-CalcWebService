@@ -5,8 +5,6 @@ import (
 	"strings"
 )
 
-const digits string = "0123456789."
-
 func getPrecedence(operator string) int {
 	switch operator {
 	case "+", "-":
@@ -19,7 +17,7 @@ func getPrecedence(operator string) int {
 }
 
 func Calc(expression string) (float64, error) {
-	if expression == "" {
+	if strings.TrimSpace(expression) == "" {
 		return 0, ErrEmptyExpression
 	}
 
@@ -45,7 +43,7 @@ func tokenize(expr string) []string {
 
 	for _, r := range expr {
 		strRune := string(r)
-		if strings.ContainsAny(strRune, digits) {
+		if strings.ContainsAny(strRune, "0123456789.") {
 			nums += strRune
 		} else {
 			if nums != "" {
