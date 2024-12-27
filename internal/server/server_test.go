@@ -118,8 +118,8 @@ func TestCalcHandler200(t *testing.T) {
 	for _, testCase := range testCases200 {
 		t.Run(testCase.name, func(t *testing.T) {
 			var b bytes.Buffer
-			err := json.NewEncoder(&b).Encode(testCase)
-			if err != nil {
+
+			if err := json.NewEncoder(&b).Encode(testCase); err != nil {
 				t.Error("failed encode test cases", err)
 				return
 			}
@@ -130,13 +130,14 @@ func TestCalcHandler200(t *testing.T) {
 			req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 			c := echo.New().NewContext(req, rec)
 
-			server := Server{server: e}
-			err = server.calculate(c)
-
 			resp := Response{}
-			err = json.NewDecoder(rec.Body).Decode(&resp)
+			server := Server{server: e}
+			if err := server.calculate(c); err != nil {
+				t.Errorf("unexpected error: %v", err)
+				return
+			}
 
-			if err != nil && err != io.EOF {
+			if err := json.NewDecoder(rec.Body).Decode(&resp); err != nil && err != io.EOF {
 				t.Errorf("unexpected error: %v", err)
 				return
 			}
@@ -212,7 +213,7 @@ func TestCalcHandler422(t *testing.T) {
 			c := echo.New().NewContext(req, rec)
 
 			server := Server{server: e}
-			err = server.calculate(c)
+			err = server.calculate(c) //nolint:errcheck
 			resp := Response{}
 
 			if testCase.expectedStatus != 200 {
@@ -255,7 +256,7 @@ func TestCalcHandler500(t *testing.T) {
 	for _, testCase := range testCases500 {
 		t.Run(testCase.name, func(t *testing.T) {
 			var b bytes.Buffer
-			err := json.NewEncoder(&b).Encode(testCase)
+			var err = json.NewEncoder(&b).Encode(testCase)
 			if err != nil {
 				t.Error("failed encode test cases", err)
 				return
@@ -268,7 +269,7 @@ func TestCalcHandler500(t *testing.T) {
 			c := echo.New().NewContext(req, rec)
 
 			server := Server{server: e}
-			err = server.calculate(c)
+			err = server.calculate(c) //nolint:errcheck
 			resp := Response{}
 
 			if testCase.expectedStatus != http.StatusInternalServerError {

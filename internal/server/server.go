@@ -49,7 +49,7 @@ func New(ctx context.Context, port int, pattern_url string) (*Server, error) {
 	))
 
 	server := &Server{e}
-	server.server.POST(pattern_url, server.calculate)  // обработчик для метода POST
+	server.server.POST(pattern_url, server.calculate) // обработчик для метода POST
 
 	return server, nil
 }
