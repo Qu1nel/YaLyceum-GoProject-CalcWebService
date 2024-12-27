@@ -15,13 +15,13 @@ OS := $(shell uname)
 
 ifeq ($(OS),Linux)
     BINARY := bin/CalcService
-	TEST_PATH := ./...
+	TEST_PATH := ./internal/server ./pkg/calculator
 else ifeq ($(OS),Darwin)
     BINARY := bin/CalcService
-	TEST_PATH := ./...
+	TEST_PATH := ./internal/server ./pkg/calculator
 else
     BINARY := bin/CalcService.exe
-	TEST_PATH := .\...
+	TEST_PATH := .\internal\server .\pkg\calculator
 endif
 
 ENTRY_POINT=./cmd/main.go
