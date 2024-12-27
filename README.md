@@ -56,6 +56,9 @@
   - [Make](#make)
   - [Docker](#docker)
   - [Самостоятельно](#самостоятельно)
+- [Тестирование](#тестирование)
+  - [Make](#make-1)
+  - [Вручную](#вручную)
 - [Документация](#документация)
   - [Postman](#postman)
   - [Curl](#curl)
@@ -147,6 +150,33 @@ go build -o main ./cmd/main.go
 ```bash
 go mod tidy
 go run ./cmd/main.go
+```
+
+## Тестирование
+
+Тесты написаны для `calculator` и `server` файлов и для запуска тестов можно воспользовать утилитой `make`, либо запустить их самостоятельно
+
+## Make
+
+Если у вас установлена утилина `make`, то вы можете запустить тесты так:
+
+```bash
+make test
+```
+
+Или:
+
+```bash
+make tests
+```
+
+## Вручную
+
+Для запуска тестов вручную нужно ввести в терминал:
+
+```bash
+go test ./pkg/calculator/ -short -v -cover
+go test ./internal/server/ -short -v -cover
 ```
 
 ## Документация
