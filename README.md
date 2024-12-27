@@ -197,7 +197,7 @@ go test ./internal/server/ -short -v -cover
 
 ### Curl
 
-Введите команду: (для Internal server error)
+Введите команду: (для Internal server error - 500)
 
 ```bash
 curl -w "%{http_code}" --location 'localhost:8989/api/v1/calculate' \
@@ -218,7 +218,7 @@ curl -w "%{http_code}" --location 'localhost:8989/api/v1/calculate' \
 500
 ```
 
-Введите команду: (для кода 200)
+Введите команду: (для успешного выполшения - 200)
 
 ```bash
 curl -w "%{http_code}" --location 'localhost:8989/api/v1/calculate' \
@@ -232,17 +232,14 @@ curl -w "%{http_code}" --location 'localhost:8989/api/v1/calculate' \
 
 ```json
 {
-   "result":"6"
+   "result": "6"
 }
 ```
-
 ```bash
 200
 ```
 
-
-Введите команду: (для Expression is not valid)
-
+Введите команду: (для неккоректного выражения - 422 Expression is not valid (пояснение ошибки))
 
 ```bash
 curl -w "%{http_code}" --location 'localhost:8989/api/v1/calculate' \
@@ -256,10 +253,9 @@ curl -w "%{http_code}" --location 'localhost:8989/api/v1/calculate' \
 
 ```json
 {
-   "error":"Expression is not valid"
+   "error": "Expression is not valid (empty expression)"
 }
 ```
-
 ```bash
 422
 ```
